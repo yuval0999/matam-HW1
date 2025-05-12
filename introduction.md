@@ -24,6 +24,6 @@ Tell us a bit about yourselves!
 
 	- Second student's name: Maxim Korshak
 	- Favorite singer: Den Reynolds
-	- Favorite song: Ma 
+	- Favorite song: Ma meilleure Ennemie
 	- Desirable grade in Matam: 100
 	- which TA's song you liked the most: Baraa 
