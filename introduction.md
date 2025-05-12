@@ -22,8 +22,8 @@ Tell us a bit about yourselves!
 	- Desirable grade in Matam: 100
 	- which TA's song you liked the most: Regev
 
-	- Second student's name:
-	- Favorite singer:
-	- Favorite song:
-	- Desirable grade in Matam:
-	- which TA's song you liked the most: 
+	- Second student's name: Maxim Korshak
+	- Favorite singer: Den Reynolds
+	- Favorite song: Follow you
+	- Desirable grade in Matam: 100
+	- which TA's song you liked the most: Baraa 
