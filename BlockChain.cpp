@@ -6,7 +6,12 @@ using namespace std;
 
 //Changed Implementation of first two functions, recursion is not needed
 
-
+BlockChain* createBlock(
+    const string& sender,
+    const string& receiver,
+    const unsigned int value,
+    const string& timestamp
+);
 int BlockChainGetSize(const BlockChain& blockChain) {
     int size = 0;
     const BlockChain* currentBlock = &blockChain;
@@ -61,7 +66,21 @@ void BlockChainAppendTransaction(
 //Worst function of mine, check it out please, pay attention that function returns by value
 
 BlockChain BlockChainLoad(ifstream& file) {
-    string line;
+    string sender, receiver, timestamp;
+    unsigned int value;
+    //checked in piazza and we can assume the first line is not empty
+    file >> sender >> receiver >> value >> timestamp;
+    BlockChain* head = createBlock(sender, receiver, value, timestamp);
+    BlockChain* iterator = head;
+    while (file >> sender >> receiver >> value >> timestamp) {
+        iterator -> previousBlock = createBlock(sender, receiver, value, timestamp);
+        iterator = iterator ->previousBlock;
+    }
+    return *head;
+}
+
+/*
+*string line;
     string sender, receiver, timestamp;
     unsigned int value;
     BlockChain tail;
@@ -92,7 +111,8 @@ BlockChain BlockChainLoad(ifstream& file) {
         delete ptr;
     }
     return result;
-}
+ *
+ */
 
 void BlockChainDump(const BlockChain& blockChain, ofstream& file) {
     const BlockChain* currentBlock = &blockChain;
@@ -162,11 +182,27 @@ void BlockChainCompress(BlockChain &blockChain) {
 }
 
 void BlockChainTransform(BlockChain& blockChain, updateFunction function) {
+BlockChain* currentBlock = &blockChain;
     do {
-        blockChain.transaction.value = function(blockChain.transaction.value);
-    } while (blockChain.previousBlock != nullptr);
+        currentBlock->transaction.value = function(currentBlock->transaction.value);
+        currentBlock = currentBlock->previousBlock;
+    } while (currentBlock->previousBlock != nullptr);
 }
 
+BlockChain* createBlock(
+    const string& sender,
+    const string& receiver,
+    const unsigned int value,
+    const string& timestamp
+) {
+    BlockChain* block = new BlockChain;
+    block ->transaction.sender = sender;
+    block ->transaction.receiver = receiver;
+    block ->transaction.value = value;
+    block ->timeStamp = timestamp;
+    block ->previousBlock = nullptr;
+    return  block;
+}
 
 
 
