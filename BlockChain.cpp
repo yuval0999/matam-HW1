@@ -105,6 +105,63 @@ void BlockChainDump(const BlockChain& blockChain, ofstream& file) {
     }
 }
 
+void BlockChainDumpHashed(const BlockChain &blockChain, ofstream &file) {
+    const BlockChain* currentBlock = &blockChain;
+    while (currentBlock != nullptr) {
+        if (currentBlock->previousBlock != nullptr) {
+            file << TransactionHashedMessage(currentBlock->transaction) << "\n" ;
+        }
+        else {
+            file << TransactionHashedMessage(currentBlock->transaction);
+        }
+        currentBlock = currentBlock->previousBlock;
+    }
+}
+
+bool BlockChainVerifyFile(const BlockChain &blockChain, std::ifstream &file) {
+    const BlockChain* currentBlock = &blockChain;
+    string line;
+    while (currentBlock != nullptr) {
+        if (!getline(file, line)) {
+            return false;
+        }
+        if (!TransactionVerifyHashedMessage(currentBlock->transaction, line)) {
+            return false;
+        }
+        currentBlock = currentBlock->previousBlock;
+    }
+    if (getline(file, line)) {
+        return false;
+    }
+    return true;
+}
+
+void BlockChainCompress(BlockChain &blockChain) {
+    BlockChain* currentBlock = &blockChain;
+    while (currentBlock != nullptr) {
+        string currentSender = currentBlock->transaction.sender;
+        string currentReceiver = currentBlock->transaction.receiver;
+
+        BlockChain* iterator = currentBlock->previousBlock;
+        BlockChain* lastBlock = currentBlock;
+        while (iterator != nullptr) {
+            if (iterator->transaction.sender == currentSender &&
+                iterator->transaction.receiver == currentReceiver) {
+                currentBlock->transaction.value += iterator->transaction.value;
+                currentBlock->timeStamp = iterator->timeStamp;
+                lastBlock->previousBlock = iterator->previousBlock;
+                delete iterator;
+                iterator = lastBlock->previousBlock;
+            }
+            else {
+                lastBlock = iterator;
+                iterator = iterator->previousBlock;
+            }
+        }
+        currentBlock = currentBlock->previousBlock;
+    }
+}
+
 
 
 
