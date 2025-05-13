@@ -141,7 +141,6 @@ void BlockChainCompress(BlockChain &blockChain) {
     while (currentBlock != nullptr) {
         string currentSender = currentBlock->transaction.sender;
         string currentReceiver = currentBlock->transaction.receiver;
-
         BlockChain* iterator = currentBlock->previousBlock;
         BlockChain* lastBlock = currentBlock;
         while (iterator != nullptr) {
@@ -160,6 +159,12 @@ void BlockChainCompress(BlockChain &blockChain) {
         }
         currentBlock = currentBlock->previousBlock;
     }
+}
+
+void BlockChainTransform(BlockChain& blockChain, updateFunction function) {
+    do {
+        blockChain.transaction.value = function(blockChain.transaction.value);
+    } while (blockChain.previousBlock != nullptr);
 }
 
 
