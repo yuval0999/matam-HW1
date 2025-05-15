@@ -1,6 +1,7 @@
 #include "BlockChain.h"
 #include <fstream>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -104,15 +105,18 @@ bool BlockChainVerifyFile(const BlockChain &blockChain, std::ifstream &file) {
     const BlockChain* currentBlock = &blockChain;
     string line;
     while (currentBlock != nullptr) {
-        if (!getline(file, line)) {
+        if (!(file >> line)) {
+            std::cout << line;
             return false;
         }
         if (!TransactionVerifyHashedMessage(currentBlock->transaction, line)) {
+            std::cout << line;
             return false;
-        }
+         }
         currentBlock = currentBlock->previousBlock;
     }
-    if (getline(file, line)) {
+    if (file >> line) {
+        std::cout << "verifaication failed last line";
         return false;
     }
     return true;
