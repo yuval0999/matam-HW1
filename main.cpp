@@ -10,7 +10,7 @@ static void compress(BlockChain& blockChain, ofstream& target);
 static void format(const BlockChain& blockChain , ofstream& target);
 
 int main (int argc, char** argv) {
-    if (argc != 3) {
+    if (argc != 4) {
         std::cout << getErrorMessage();
         return 0;
     }
