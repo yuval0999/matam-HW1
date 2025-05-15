@@ -74,12 +74,16 @@ BlockChain BlockChainLoad(ifstream& file) {
 
 void BlockChainDump(const BlockChain& blockChain, ofstream& file) {
     const BlockChain* currentBlock = &blockChain;
-    while (currentBlock->previousBlock != nullptr) {
-        file << "Sender name: " << currentBlock->transaction.sender << "\n"
-             << "Receiver name: " << currentBlock->transaction.receiver << "\n"
-             << "Transaction nalue: " << currentBlock->transaction.value << "\n"
+    int index = 1;
+    file<<"BlockChain Info:\n";
+    while (currentBlock != nullptr) {
+        file << index << ".\n"
+             << "Sender Name: " << currentBlock->transaction.sender << "\n"
+             << "Receiver Name: " << currentBlock->transaction.receiver << "\n"
+             << "Transaction Value: " << currentBlock->transaction.value << "\n"
              << "Transaction timestamp: " << currentBlock->timeStamp << "\n";
         currentBlock = currentBlock->previousBlock;
+        index++;
     }
 }
 
