@@ -44,6 +44,7 @@ void BlockChainAppendTransaction(
     newBlock->transaction.receiver = receiver;
     newBlock->timeStamp = timestamp;
     newBlock->previousBlock = &blockChain;
+    newBlock->deletePtr = newBlock;
 }
 
 void BlockChainAppendTransaction(
@@ -55,6 +56,7 @@ void BlockChainAppendTransaction(
     newBlock->transaction = transaction;
     newBlock->timeStamp = timestamp;
     newBlock->previousBlock = &blockChain;
+    newBlock->deletePtr = newBlock;
 }
 
 //Worst function of mine, check it out please, pay attention that function returns by value
@@ -164,6 +166,7 @@ BlockChain* CreateBlock(
     block ->transaction.receiver = receiver;
     block ->transaction.value = value;
     block ->timeStamp = timestamp;
+    block->deletePtr = block;
     block ->previousBlock = nullptr;
     return  block;
 }

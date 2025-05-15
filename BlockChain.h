@@ -23,6 +23,7 @@ struct BlockChain {
 	   Transaction transaction;
     string timeStamp;
     BlockChain* previousBlock;
+    BlockChain* deletePtr;
 };
 
 

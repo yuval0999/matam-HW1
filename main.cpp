@@ -42,7 +42,7 @@ int main (int argc, char** argv) {
         std::cout << getErrorMessage() << "\n";
     }
     target.close();
-    //DeleteBlockCHain(&blockChain);
+    DeleteBlockCHain(blockChain.deletePtr);
     return 0;
 }
 static void format(const BlockChain& blockChain , ofstream& target) {
