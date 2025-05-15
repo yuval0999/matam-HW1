@@ -167,7 +167,7 @@ void DeleteBlockCHain(BlockChain& blockChain) {
     BlockChain* currentBlock = &blockChain;
     while (currentBlock != nullptr) {
         BlockChain* nextBlock = currentBlock->previousBlock;
-        delete[] currentBlock;
+        delete currentBlock;
         currentBlock = nextBlock;
     }
 }

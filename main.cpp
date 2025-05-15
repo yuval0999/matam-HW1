@@ -38,7 +38,6 @@ int main (int argc, char** argv) {
     }
     target.close();
     source.close();
-    DeleteBlockCHain(blockChain);
     return 0;
 }
 static void format(const BlockChain& blockChain , ofstream& target) {
