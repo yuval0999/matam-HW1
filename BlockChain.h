@@ -162,8 +162,8 @@ void BlockChainTransform(BlockChain& blockChain, updateFunction function);
 
 void DeleteBlockCHain(BlockChain& blockChain);
 
-void CreateBlock(const string& sender,
+BlockChain* CreateBlock(const string& sender,
     const string& receiver,
     const unsigned int value,
     const string& timestamp
-)
+);

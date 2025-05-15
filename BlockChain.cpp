@@ -5,13 +5,6 @@
 using namespace std;
 
 //Changed Implementation of first two functions, recursion is not needed
-
-BlockChain* createBlock(
-    const string& sender,
-    const string& receiver,
-    const unsigned int value,
-    const string& timestamp
-);
 int BlockChainGetSize(const BlockChain& blockChain) {
     int size = 0;
     const BlockChain* currentBlock = &blockChain;
@@ -70,10 +63,10 @@ BlockChain BlockChainLoad(ifstream& file) {
     unsigned int value;
     //checked in piazza and we can assume the first line is not empty
     file >> sender >> receiver >> value >> timestamp;
-    BlockChain* head = createBlock(sender, receiver, value, timestamp);
+    BlockChain* head = CreateBlock(sender, receiver, value, timestamp);
     BlockChain* iterator = head;
     while (file >> sender >> receiver >> value >> timestamp) {
-        iterator -> previousBlock = createBlock(sender, receiver, value, timestamp);
+        iterator -> previousBlock = CreateBlock(sender, receiver, value, timestamp);
         iterator = iterator ->previousBlock;
     }
     return *head;
@@ -154,7 +147,7 @@ BlockChain* currentBlock = &blockChain;
     } while (currentBlock->previousBlock != nullptr);
 }
 
-BlockChain* createBlock(
+BlockChain* CreateBlock(
     const string& sender,
     const string& receiver,
     const unsigned int value,
