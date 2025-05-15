@@ -20,9 +20,9 @@ typedef unsigned int (*updateFunction)(unsigned int);
 */
 struct BlockChain {
     // You may add any fields you believe are necessary
-	Transaction transaction;
+	   Transaction transaction;
     string timeStamp;
-    BlockChain* previousTransaction;
+    BlockChain* previousBlock;
 };
 
 
@@ -159,3 +159,11 @@ void BlockChainCompress(BlockChain& blockChain);
  * @param function a pointer to a transform function
 */
 void BlockChainTransform(BlockChain& blockChain, updateFunction function);
+
+void DeleteBlockCHain(BlockChain& blockChain);
+
+BlockChain* CreateBlock(const string& sender,
+    const string& receiver,
+    const unsigned int value,
+    const string& timestamp
+);
