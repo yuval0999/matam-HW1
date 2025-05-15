@@ -6,6 +6,8 @@
 #define VERIFY_FAIL "Verification failed"
 static void hash(const BlockChain& blockChain, ofstream& target);
 static void verify(const BlockChain& blockChain, ifstream& target);
+static void compress(BlockChain& blockChain, ofstream& target);
+static void format(const BlockChain& blockChain , ofstream& target);
 
 int main (int argc, char** argv) {
     if (argc != 3) {
@@ -20,13 +22,13 @@ int main (int argc, char** argv) {
     function = argv[0];
     BlockChain blockChain = BlockChainLoad(source);
     if (function == "format") {
-
+        format(blockChain, target);
     }
     else if (function == "hash") {
         hash(blockChain, target);
     }
     else if (function == "compress") {
-
+        compress(blockChain, target);
     }
     else if (function == "verify") {
         ifstream verifySource;
@@ -37,11 +39,19 @@ int main (int argc, char** argv) {
     target.close();
     source.close();
     DeleteBlockCHain(blockChain);
+    return 0;
 }
-
+static void format(const BlockChain& blockChain , ofstream& target) {
+    BlockChainDump(blockChain, target);
+}
 
 static void hash(const BlockChain& blockChain, ofstream& target) {
     BlockChainDumpHashed(blockChain, target);
+}
+
+static void compress(BlockChain& blockChain, ofstream& target) {
+    BlockChainCompress(blockChain);
+    BlockChainDump(blockChain, target);
 }
 
 static void verify(const BlockChain& blockChain, ifstream& target) {
@@ -52,3 +62,7 @@ static void verify(const BlockChain& blockChain, ifstream& target) {
         std::cout << VERIFY_FAIL;
     }
 }
+
+
+
+
