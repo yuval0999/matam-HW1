@@ -17,9 +17,9 @@ int main (int argc, char** argv) {
     ofstream target;
     ifstream source;
     string function;
-    target.open(argv[2]);
-    source.open(argv[1]);
-    function = argv[0];
+    target.open(argv[3]);
+    source.open(argv[2]);
+    function = argv[1];
     BlockChain blockChain = BlockChainLoad(source);
     if (function == "format") {
         format(blockChain, target);
@@ -32,7 +32,7 @@ int main (int argc, char** argv) {
     }
     else if (function == "verify") {
         ifstream verifySource;
-        verifySource.open(argv[2]);
+        verifySource.open(argv[3]);
         verify(blockChain, verifySource);
         verifySource.close();
     }
