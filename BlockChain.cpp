@@ -129,7 +129,6 @@ void BlockChainCompress(BlockChain &blockChain) {
             if (iterator->transaction.sender == currentSender &&
                 iterator->transaction.receiver == currentReceiver) {
                 currentBlock->transaction.value += iterator->transaction.value;
-                currentBlock->timeStamp = iterator->timeStamp;
                 lastBlock->previousBlock = iterator->previousBlock;
                 delete iterator;
                 iterator = lastBlock->previousBlock;
