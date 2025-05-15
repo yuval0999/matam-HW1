@@ -79,41 +79,6 @@ BlockChain BlockChainLoad(ifstream& file) {
     return *head;
 }
 
-/*
-*string line;
-    string sender, receiver, timestamp;
-    unsigned int value;
-    BlockChain tail;
-    BlockChain* head = nullptr;
-    while (file >> sender >> receiver >> value >> timestamp) {
-        if (head == nullptr) {
-            tail.transaction.sender = sender;
-            tail.transaction.receiver = receiver;
-            tail.transaction.value = value;
-            tail.timeStamp = timestamp;
-            tail.previousBlock = nullptr;
-            head = &tail;
-        }
-        else {
-            BlockChain* newBlock = new BlockChain;
-            newBlock->transaction.sender = sender;
-            newBlock->transaction.receiver = receiver;
-            newBlock->transaction.value = value;
-            newBlock->timeStamp = timestamp;
-            newBlock->previousBlock = head;
-            head = newBlock;
-        }
-    }
-    BlockChain result = *head;
-    while (head != nullptr) {
-        BlockChain* ptr = head;
-        head = head->previousBlock;
-        delete ptr;
-    }
-    return result;
- *
- */
-
 void BlockChainDump(const BlockChain& blockChain, ofstream& file) {
     const BlockChain* currentBlock = &blockChain;
     while (currentBlock->previousBlock != nullptr) {
@@ -202,6 +167,16 @@ BlockChain* createBlock(
     block ->timeStamp = timestamp;
     block ->previousBlock = nullptr;
     return  block;
+}
+
+
+void DeleteBlockCHain(BlockChain& blockChain) {
+    BlockChain* currentBlock = &blockChain;
+    while (currentBlock != nullptr) {
+        BlockChain* nextBlock = currentBlock->previousBlock;
+        delete[] currentBlock;
+        currentBlock = nextBlock;
+    }
 }
 
 
