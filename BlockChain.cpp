@@ -106,17 +106,14 @@ bool BlockChainVerifyFile(const BlockChain &blockChain, std::ifstream &file) {
     string line;
     while (currentBlock != nullptr) {
         if (!(file >> line)) {
-            std::cout << line;
             return false;
         }
         if (!TransactionVerifyHashedMessage(currentBlock->transaction, line)) {
-            std::cout << line;
             return false;
          }
         currentBlock = currentBlock->previousBlock;
     }
     if (file >> line) {
-        std::cout << "verifaication failed last line";
         return false;
     }
     return true;
@@ -129,7 +126,9 @@ void BlockChainCompress(BlockChain &blockChain) {
         string currentReceiver = currentBlock->transaction.receiver;
         BlockChain* iterator = currentBlock->previousBlock;
         BlockChain* lastBlock = currentBlock;
-        while (iterator != nullptr) {
+        while (iterator != nullptr &&
+            iterator->transaction.receiver == currentReceiver &&
+            iterator->transaction.sender == currentSender) {
             if (iterator->transaction.sender == currentSender &&
                 iterator->transaction.receiver == currentReceiver) {
                 currentBlock->transaction.value += iterator->transaction.value;
@@ -169,13 +168,11 @@ BlockChain* CreateBlock(
     return  block;
 }
 
-
-void DeleteBlockCHain(BlockChain& blockChain) {
-    BlockChain* currentBlock = &blockChain;
-    while (currentBlock != nullptr) {
-        BlockChain* nextBlock = currentBlock->previousBlock;
+void DeleteBlockCHain(BlockChain* blockChain) {
+    while (blockChain != nullptr) {
+        BlockChain* currentBlock = blockChain;
+        blockChain = blockChain->previousBlock;
         delete currentBlock;
-        currentBlock = nextBlock;
     }
 }
 

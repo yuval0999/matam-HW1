@@ -160,7 +160,7 @@ void BlockChainCompress(BlockChain& blockChain);
 */
 void BlockChainTransform(BlockChain& blockChain, updateFunction function);
 
-void DeleteBlockCHain(BlockChain& blockChain);
+void DeleteBlockCHain(BlockChain* blockChain);
 
 BlockChain* CreateBlock(const string& sender,
     const string& receiver,

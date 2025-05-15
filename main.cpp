@@ -2,8 +2,8 @@
 #include <iostream>
 #include "Utilities.h"
 
-#define VERIFY_SUCCESS "Verification passed"
-#define VERIFY_FAIL "Verification failed"
+#define VERIFY_SUCCESS "Verification passed\n"
+#define VERIFY_FAIL "Verification failed\n"
 static void hash(const BlockChain& blockChain, ofstream& target);
 static void verify(const BlockChain& blockChain, ifstream& target);
 static void compress(BlockChain& blockChain, ofstream& target);
@@ -11,7 +11,7 @@ static void format(const BlockChain& blockChain , ofstream& target);
 
 int main (int argc, char** argv) {
     if (argc != 4) {
-        std::cout << getErrorMessage();
+        std::cout << getErrorMessage()<<"\n";
         return 0;
     }
     ofstream target;
@@ -38,7 +38,11 @@ int main (int argc, char** argv) {
         verify(blockChain, source);
         source.close();
     }
+    else {
+        std::cout << getErrorMessage() << "\n";
+    }
     target.close();
+    //DeleteBlockCHain(&blockChain);
     return 0;
 }
 static void format(const BlockChain& blockChain , ofstream& target) {
@@ -56,10 +60,10 @@ static void compress(BlockChain& blockChain, ofstream& target) {
 
 static void verify(const BlockChain& blockChain, ifstream& target) {
     if (BlockChainVerifyFile(blockChain, target)) {
-        std::cout << VERIFY_SUCCESS;
+        std::cout << VERIFY_SUCCESS << "\n";
     }
     else {
-        std::cout << VERIFY_FAIL;
+        std::cout << VERIFY_FAIL << "\n";
     }
 }
 
