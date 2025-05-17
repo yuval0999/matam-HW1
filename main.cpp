@@ -24,14 +24,17 @@ int main (int argc, char** argv) {
     if (function == "format") {
         target.open(argv[3]);
         format(blockChain, target);
+        target.close();
     }
     else if (function == "hash") {
         target.open(argv[3]);
         hash(blockChain, target);
+        target.close();
     }
     else if (function == "compress") {
         target.open(argv[3]);
         compress(blockChain, target);
+        target.close();
     }
     else if (function == "verify") {
         source.open(argv[3]);
@@ -41,10 +44,12 @@ int main (int argc, char** argv) {
     else {
         std::cout << getErrorMessage() << "\n";
     }
-    target.close();
-    DeleteBlockCHain(blockChain.deletePtr);
+
+    DeleteBlockChain(blockChain.deletePtr);
     return 0;
 }
+
+
 static void format(const BlockChain& blockChain , ofstream& target) {
     BlockChainDump(blockChain, target);
 }
