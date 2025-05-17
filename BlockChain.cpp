@@ -127,21 +127,13 @@ void BlockChainCompress(BlockChain &blockChain) {
         string currentSender = currentBlock->transaction.sender;
         string currentReceiver = currentBlock->transaction.receiver;
         BlockChain* iterator = currentBlock->previousBlock;
-        BlockChain* lastBlock = currentBlock;
+
         while (iterator != nullptr &&
-            iterator->transaction.receiver == currentReceiver &&
-            iterator->transaction.sender == currentSender) {
-            if (iterator->transaction.sender == currentSender &&
-                iterator->transaction.receiver == currentReceiver) {
-                currentBlock->transaction.value += iterator->transaction.value;
-                lastBlock->previousBlock = iterator->previousBlock;
-                delete iterator;
-                iterator = lastBlock->previousBlock;
-            }
-            else {
-                lastBlock = iterator;
-                iterator = iterator->previousBlock;
-            }
+                iterator->transaction.receiver == currentReceiver &&
+                iterator->transaction.sender == currentSender) {
+            currentBlock->transaction.value += iterator->transaction.value;
+            currentBlock->previousBlock = iterator->previousBlock;
+            iterator = iterator->previousBlock;
         }
         currentBlock = currentBlock->previousBlock;
     }
@@ -171,7 +163,7 @@ BlockChain* CreateBlock(
     return  block;
 }
 
-void DeleteBlockCHain(BlockChain* blockChain) {
+void DeleteBlockChain(BlockChain* blockChain) {
     while (blockChain != nullptr) {
         BlockChain* currentBlock = blockChain;
         blockChain = blockChain->previousBlock;
